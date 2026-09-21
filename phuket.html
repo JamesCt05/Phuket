@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phuket - Phang Nga Trip Itinerary</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Prompt', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen pb-16">
+
+  <!-- Header Banner -->
+  <header class="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-700 text-white py-8 px-4 shadow-lg">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="bg-white/20 text-xs px-3 py-1 rounded-full uppercase tracking-wider font-semibold">Travel Itinerary</span>
+      <h1 class="text-3xl font-bold mt-2">ภูเก็ต – เขาหลัก (4 วัน 3 คืน)</h1>
+      <p class="text-teal-100 text-sm mt-1">30 ก.ย. - 3 ต.ค. • แผนเที่ยว ร้านอาหาร ที่พัก และจุดชมวิว</p>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="sticky top-0 z-30 bg-white shadow-md">
+    <div class="max-w-3xl mx-auto flex overflow-x-auto p-2 gap-2 justify-start sm:justify-center">
+      <button onclick="switchDay(1)" id="tab-1" class="day-tab px-4 py-2 rounded-xl text-sm font-semibold transition bg-teal-600 text-white shrink-0">
+        <i class="fa-solid fa-calendar-day mr-1"></i> Day 1 (30 ก.ย.)
+      </button>
+      <button onclick="switchDay(2)" id="tab-2" class="day-tab px-4 py-2 rounded-xl text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">
+        <i class="fa-solid fa-calendar-day mr-1"></i> Day 2 (1 ต.ค.)
+      </button>
+      <button onclick="switchDay(3)" id="tab-3" class="day-tab px-4 py-2 rounded-xl text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">
+        <i class="fa-solid fa-calendar-day mr-1"></i> Day 3 (2 ต.ค.)
+      </button>
+      <button onclick="switchDay(4)" id="tab-4" class="day-tab px-4 py-2 rounded-xl text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0">
+        <i class="fa-solid fa-plane-departure mr-1"></i> Day 4 (3 ต.ค.)
+      </button>
+    </div>
+  </div>
+
+  <!-- Content Container -->
+  <main class="max-w-3xl mx-auto px-4 mt-6">
+
+    <!-- Action Bar: Google Map Route -->
+    <div class="mb-6 flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-200 gap-3">
+      <div>
+        <h2 id="day-title" class="font-bold text-lg text-slate-800">วันที่ 30 ก.ย.: เดินทางถึง – เมืองเก่า – ป่าตอง</h2>
+        <p id="day-desc" class="text-xs text-slate-500">พัก: Marina Gallery Resort Kacha Kalim Bay</p>
+      </div>
+      <a id="route-map-btn" href="#" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow transition">
+        <i class="fa-solid fa-map-location-dot mr-2"></i> เปิดเส้นทางรวมบน Google Maps
+      </a>
+    </div>
+
+    <!-- Timeline List -->
+    <div id="timeline-container" class="space-y-4">
+      <!-- Items will be injected here by JavaScript -->
+    </div>
+  </main>
+
+  <script>
+    const tripData = {
+      1: {
+        title: "วันที่ 30 ก.ย.: เดินทางถึง – เมืองเก่า – ป่าตอง",
+        hotel: "ที่พัก: Marina Gallery Resort Kacha Kalim Bay",
+        routeUrl: "https://www.google.com/maps/dir/Phuket+International+Airport/Nam+Yoi+Restaurant/Old+Phuket+Town/Tu+Kab+Khao+Restaurant+Phuket/Marina+Gallery+Resort+Kacha+Kalim+Bay/Samutr+Bar/Catch+and+Co+Patong/Bangla+Road",
+        stops: [
+          {
+            time: "ช่วงเช้า/สาย",
+            title: "สนามบินนานาชาติภูเก็ต (HKT)",
+            category: "จุดเริ่มต้น / รับรถเช่า",
+            desc: "รับรถเช่าที่สนามบิน ตรวจสอบรอบคันและสัญญาเช่ารถ มุ่งหน้าเข้าเมือง",
+            icon: "fa-plane-arrival",
+            color: "text-blue-500 bg-blue-50",
+            query: "Phuket International Airport"
+          },
+          {
+            time: "11:30 น.",
+            title: "ร้านอาหารน้ำย้อย",
+            category: "มื้อกลางวัน (อาหารใต้พื้นเมือง)",
+            desc: "ร้านมิชลิน บิบ กูร์มองด์ รสชาติจัดจ้าน เมนูเด็ด: แกงส้มปลากะพงยอดมะพร้าว, หมูฮ้อง, กุ้งผัดสะตอ",
+            icon: "fa-utensils",
+            color: "text-amber-500 bg-amber-50",
+            query: "Nam Yoi Restaurant Phuket"
+          },
+          {
+            time: "13:00 น.",
+            title: "ย่านเมืองเก่าภูเก็ต (Old Phuket Town)",
+            category: "ท่องเที่ยว / ถ่ายรูป",
+            desc: "เดินเล่นชมตึกเก่าชิโน-โปรตุกีส แวะสตรีทอาร์ตและร้านขายของที่ระลึกบนถนนถลาง",
+            icon: "fa-camera",
+            color: "text-purple-500 bg-purple-50",
+            query: "Old Phuket Town"
+          },
+          {
+            time: "14:15 น.",
+            title: "ร้านตู้กับข้าว",
+            category: "อาหารพื้นเมือง / ขนม",
+            desc: "ร้านอาหารในตึกโบราณ บรรยากาศสวยงาม แวะลองเครื่องดื่ม ขนมหวาน หรืออาหารพื้นเมือง",
+            icon: "fa-store",
+            color: "text-amber-500 bg-amber-50",
+            query: "Tu Kab Khao Restaurant Phuket"
+          },
+          {
+            time: "15:30 น.",
+            title: "ครัวใบกล้วย สามกอง",
+            category: "ร้านอร่อยตัวเลือกสำรอง/เสริม",
+            desc: "ร้านอาหารพื้นบ้านย่านสามกอง รสชาติใต้แท้ๆ ปลากะพงทอดขมิ้น และแกงคั่วไตปลา",
+            icon: "fa-utensils",
+            color: "text-amber-500 bg-amber-50",
+            query: "ครัวใบกล้วย สามกอง ภูเก็ต"
+          },
+          {
+            time: "16:30 น.",
+            title: "Marina Gallery Resort Kacha Kalim Bay",
+            category: "เช็กอินที่พัก คืนที่ 1",
+            desc: "เช็กอินเข้าที่พัก พักผ่อน ถ่ายรูปกับสระว่ายน้ำและวิวทะเลหาดกะหลิม",
+            icon: "fa-hotel",
+            color: "text-indigo-500 bg-indigo-50",
+            query: "Marina Gallery Resort Kacha Kalim Bay"
+          },
+          {
+            time: "17:30 น.",
+            title: "Cafe Amari Phuket (Samutr Bar)",
+            category: "คาเฟ่ / ชมพระอาทิตย์ตก",
+            desc: "จุดชมวิวพาโนรามามุมสูงของอ่าวป่าตองในโรงแรม Amari Phuket จิบกาแฟ/ค็อกเทลรับลมเย็น",
+            icon: "fa-mug-saucer",
+            color: "text-rose-500 bg-rose-50",
+            query: "Samutr Bar Amari Phuket"
+          },
+          {
+            time: "18:30 น.",
+            title: "Kan's Haus Cafe and Bistro",
+            category: "คาเฟ่ & บิสโทร",
+            desc: "คาเฟ่บรรยากาศสบายๆ แวะพักดื่มเครื่องดื่ม ทานเบเกอรี่หรือของว่าง",
+            icon: "fa-coffee",
+            color: "text-rose-500 bg-rose-50",
+            query: "Kans haus cafe and bistro Patong"
+          },
+          {
+            time: "19:30 น.",
+            title: "Catch & Co. Patong",
+            category: "มื้อค่ำ (ซีฟู้ด & บิสโทร)",
+            desc: "ร้านอาหารและซีฟู้ดสดใหม่ ย่านป่าตอง เหมาะสำหรับมื้อค่ำสังสรรค์",
+            icon: "fa-utensils",
+            color: "text-amber-500 bg-amber-50",
+            query: "Catch and Co Patong"
+          },
+          {
+            time: "21:00 น.",
+            title: "ป่าตอง ถนนคนเดิน (Bangla Walking Street)",
+            category: "ท่องราตรี / สตรีทไลฟ์",
+            desc: "สัมผัสแสงสีเสียงและบรรยากาศความมีชีวิตชีวาของหาดป่าตองยามค่ำคืน",
+            icon: "fa-martini-glass-citrus",
+            color: "text-pink-500 bg-pink-50",
+            query: "Bangla Road Patong"
+          }
+        ]
+      },
+      2: {
+        title: "วันที่ 1 ต.ค.: ตะลุยของกิน – ราไวย์ – แหลมพรหมเทพ",
+        hotel: "ที่พัก: The Beach Heights Resort Kata Beach",
+        routeUrl: "https://www.google.com/maps/dir/Marina+Gallery+Resort+Kacha+Kalim+Bay/Rong+Kopi+Phuket/Caixianfeng+Dimsum+Phuket/Mee+Ton+Poe+Clock+Tower/Mor+Mu+Dong+Restaurant/Rawai+Beach/Promthep+Cape/The+Beach+Heights+Resort/Go+Benz+Phuket/Nueng+Nom+Nua+Phuket",
+        stops: [
+          {
+            time: "07:30 น.",
+            title: "โรงโกปี๊",
+            category: "อาหารเช้าโบราณ",
+            desc: "สภากาแฟยามเช้า กาแฟโบราณ ชาชัก ขนมปังปิ้งสังขยา และไข่ลวก",
+            icon: "fa-mug-saucer",
+            color: "text-rose-500 bg-rose-50",
+            query: "โรงโกปี๊ ภูเก็ต"
+          },
+          {
+            time: "08:30 น.",
+            title: "ฉ๋ายเซียนฟง ติ่มซำ",
+            category: "มื้อเช้าติ่มซำ",
+            desc: "ติ่มซำนึ่งสดถาดต่อถาด มีบะกุ๊ดเต๋ร้อนๆ น้ำซุปเครื่องยาจีนกลมกล่อม",
+            icon: "fa-utensils",
+            color: "text-amber-500 bg-amber-50",
+            query: "ฉ๋ายเซียนฟง ติ่มซำ CAIXIANFENG Phuket"
+          },
+          {
+            time: "10:00 น.",
+            title: "หมูกรอบจี้ฮอง",
+            category: "ของว่าง / ร้านอร่อยในเมือง",
+            desc: "หมูกรอบหนังฟูเนื้อนุ่มฉ่ำ น้ำราดรสเด็ด แวะชิมหรือสั่งใส่กล่องทานเล่น",
+            icon: "fa-drumstick-bite",
+            color: "text-amber-500 bg-amber-50",
+            query: "ร้านหมูกรอบภูเก็ต จี้ฮอง"
+          },
+          {
+            time: "11:00 น.",
+            title: "หมี่ต้นโพธิ์ (วงเวียนหอนาฬิกา)",
+            category: "บะหมี่ฮกเกี้ยนในตำนาน",
+            desc: "หมี่ผัดฮกเกี้ยนใส่ไข่ลวก หอมกลิ่นคั่วกระทะ พร้อมห่อหมกปลาและสะเต๊ะ",
+            icon: "fa-bowl-food",
+            color: "text-amber-500 bg-amber-50",
+            query: "Mee Ton Poe Clock Tower Phuket"
+          },
+          {
+            time: "12:30 น.",
+            title: "ร้านอาหารหมอมูดง",
+            category: "มื้อกลางวัน (ป่าชายเลน)",
+            desc: "ร้านอาหารพื้นบ้านซุ้มริมป่าชายเลน เมนูขึ้นชื่อ: ปลายัดไส้, แกงคั่วหอยขม, หมูคั่วเกลือ",
+            icon: "fa-utensils",
+            color: "text-amber-500 bg-amber-50",
+            query: "Mor Mu Dong Restaurant Phuket"
+          },
+          {
+            time: "14:30 น.",
+            title: "หาดราไวย์",
+            category: "ชมวิวทะเลใต้เกาะ",
+            desc: "ชมวิถีชีวิตชาวประมง ท่าเทียบเรือประมง และแนวชายหาดสงบ",
+            icon: "fa-water",
+            color: "text-cyan-500 bg-cyan-50",
+            query: "Rawai Beach Phuket"
+          },
+          {
+            time: "15:30 น.",
+            title: "Kandy Beach",
+            category: "บีชคลับ & คาเฟ่ริมหาด",
+            desc: "แวะจิบเครื่องดื่ม ถ่ายรูปมุมสวยริมทะเล สัมผัสบรรยากาศริมหาดชิลๆ",
+            icon: "fa-umbrella-beach",
+            color: "text-teal-500 bg-teal-50",
+            query: "Kandy Beach Phuket"
+          },
+          {
+            time: "17:30 น.",
+            title: "แหลมพรหมเทพ",
+            category: "ไฮไลท์ชมพระอาทิตย์ตก",
+            desc: "ชมพระอาทิตย์อัสดงตกน้ำทะเลที่สวยที่สุดแห่งหนึ่งของประเทศไทย",
+            icon: "fa-sun",
+            color: "text-orange-500 bg-orange-50",
+            query: "Promthep Cape Phuket"
+          },
+          {
+            time: "19:00 น.",
+            title: "The Beach Heights Resort (หาดกะตะ)",
+            category: "เช็กอินที่พัก คืนที่ 2",
+            desc: "เช็กอินเข้าห้องพัก เก็บสัมภาระ และล้างหน้าเปลี่ยนชุด",
+            icon: "fa-hotel",
+            color: "text-indigo-500 bg-indigo-50",
+            query: "The Beach Heights Resort Kata Beach"
+          },
+          {
+            time: "20:30 น.",
+            title: "โกเบ๊นซ์ข้าวต้มแห้งภูเก็ต",
+            category: "มื้อดึก มิชลิน บิบ กูร์มองด์",
+            desc: "ข้าวต้มแห้งเครื่องแน่น หมูกรอบ หมูสับ เครื่องใน พร้อมน้ำซุปพริกไทยรสเข้ม",
+            icon: "fa-bowl-rice",
+            color: "text-amber-500 bg-amber-50",
+            query: "Go Benz Rice Porridge Phuket"
+          },
+          {
+            time: "22:00 น.",
+            title: "หนึ่ง นม นัว - ภูเก็ต",
+            category: "ของหวานปิดท้ายวัน",
+            desc: "ขนมปังปิ้งกรอบนอกนุ่มใน ดิปสังขยาเข้มข้น และนมสดเย็นชื่นใจ",
+            icon: "fa-ice-cream",
+            color: "text-rose-500 bg-rose-50",
+            query: "หนึ่ง นม นัว ภูเก็ต"
+          }
+        ]
+      },
+      3: {
+        title: "วันที่ 2 ต.ค.: มุ่งหน้าพังงา – เสม็ดนางชี – เขาหลัก",
+        hotel: "ที่พัก: Kalima Resort and Villas Khao Lak",
+        routeUrl: "https://www.google.com/maps/dir/The+Beach+Heights+Resort/Sarasin+Bridge/Kanomjeen+Ar-E+Khok+Kloi/Samet+Nangshe+Viewpoint/Kalima+Resort+and+Villas+Khao+Lak/Bang+Niang+Market",
+        stops: [
+          {
+            time: "08:30 น.",
+            title: "เช็กเอาต์ & ขับมุ่งหน้าขึ้นพังงา",
+            category: "การเดินทาง",
+            desc: "ออกจากหาดกะตะ ขับขึ้นเหนือข้ามไป จ.พังงา (ระยะทางประมาณ 70 กม.)",
+            icon: "fa-car",
+            color: "text-slate-500 bg-slate-50",
+            query: "Sarasin Bridge"
+          },
+          {
+            time: "09:45 น.",
+            title: "สะพานสารสิน",
+            category: "จุดชมวิวประวัติศาสตร์",
+            desc: "สะพานเชื่อมเกาะภูเก็ตกับพังงา แวะถ่ายรูปรับลมทะเลช่องแคบปากพระ",
+            icon: "fa-bridge",
+            color: "text-blue-500 bg-blue-50",
+            query: "Sarasin Bridge"
+          },
+          {
+            time: "10:15 น.",
+            title: "ขนมจีนอาอี๊ (โคกกลอย จ.พังงา)",
+            category: "มื้อสาย ขนมจีนเส้นสด",
+            desc: "ขนมจีนน้ำยาปู น้ำยาป่า แกงไตปลา พร้อมผักเหนาะสดสะอาดแบบจัดเต็ม",
+            icon: "fa-utensils",
+            color: "text-amber-500 bg-amber-50",
+            query: "ขนมจีนอาอี๊ โคกกลอย พังงา"
+          },
+          {
+            time: "11:30 น.",
+            title: "จุดชมวิวเสม็ดนางชี",
+            category: "Unseen Thailand",
+            desc: "ชมวิวเขาหินปูนและป่าชายเลนอ่าวพังงาแบบพาโนรามา 180 องศา (มีรถรับส่งขึ้นจุดชมวิว)",
+            icon: "fa-mountain-sun",
+            color: "text-emerald-500 bg-emerald-50",
+            query: "Samet Nangshe Viewpoint Phang-nga"
+          },
+          {
+            time: "14:30 น.",
+            title: "Kalima Resort and Villas Khao Lak",
+            category: "เช็กอินที่พัก คืนที่ 3",
+            desc: "เข้าพักรีสอร์ทหรูติดป่าชายเลนและหาดส่วนตัว เพลิดเพลินกับสระว่ายน้ำและการพักผ่อน",
+            icon: "fa-hotel",
+            color: "text-indigo-500 bg-indigo-50",
+            query: "Kalima Resort and Villas Khao Lak"
+          },
+          {
+            time: "17:30 น.",
+            title: "ตลาดนัดบางเนียง เขาหลัก",
+            category: "สตรีทฟู้ด & ของฝาก",
+            desc: "เดินเล่นหาของกินสไตล์สตรีทฟู้ด ชิมของอร่อย และซื้อของฝากย่านเขาหลัก",
+            icon: "fa-bag-shopping",
+            color: "text-amber-500 bg-amber-50",
+            query: "Bang Niang Market Khao Lak"
+          }
+        ]
+      },
+      4: {
+        title: "วันที่ 3 ต.ค.: พักผ่อนเขาหลัก – ชมเครื่องบิน – คืนรถสนามบิน",
+        hotel: "เดินทางกลับกรุงเทพฯ (เที่ยวบิน 19:00 น.)",
+        routeUrl: "https://www.google.com/maps/dir/Kalima+Resort+and+Villas+Khao+Lak/Mai+Khao+Beach+Plane+Spotting/Phuket+International+Airport",
+        stops: [
+          {
+            time: "08:00 - 11:30 น.",
+            title: "พักผ่อนที่ Kalima Resort",
+            category: "พักผ่อนเต็มรูปแบบ",
+            desc: "ทานอาหารเช้าที่รีสอร์ท เล่นน้ำริมสระ หรือเดินถ่ายรูปริมหาดเขาหลัก",
+            icon: "fa-spa",
+            color: "text-indigo-500 bg-indigo-50",
+            query: "Kalima Resort and Villas Khao Lak"
+          },
+          {
+            time: "12:00 น.",
+            title: "เช็กเอาต์ & ออกเดินทาง",
+            category: "การเดินทาง",
+            desc: "เช็กเอาต์ แวะทานมื้อกลางวันร้านแถวเขาหลัก และขับมุ่งหน้ากลับเกาะภูเก็ต (ใช้เวลา ~1.30 ชม.)",
+            icon: "fa-car",
+            color: "text-slate-500 bg-slate-50",
+            query: "Mai Khao Beach"
+          },
+          {
+            time: "15:00 น.",
+            title: "จุดชมวิวเครื่องบิน หาดไม้ขาว",
+            category: "ไฮไลท์ถ่ายรูปใกล้สนามบิน",
+            desc: "นั่งซาเล้งเข้าไปริมหาด ถ่ายรูปคู่กับเครื่องบินที่กำลังแลนดิ้งระยะประชิด",
+            icon: "fa-plane",
+            color: "text-sky-500 bg-sky-50",
+            query: "Mai Khao Beach Plane Spotting Phuket"
+          },
+          {
+            time: "16:30 น.",
+            title: "เติมน้ำมัน & คืนรถเช่า สนามบินภูเก็ต",
+            category: "คืนรถเช่า",
+            desc: "เติมน้ำมันเต็มถังก่อนถึงสนามบิน ส่งมอบรถเช่าและตรวจรับเงินมัดจำคืน",
+            icon: "fa-gas-pump",
+            color: "text-rose-500 bg-rose-50",
+            query: "Phuket International Airport Car Rental Return"
+          },
+          {
+            time: "17:00 น.",
+            title: "เช็กอินเที่ยวบินขากลับ (19:00 น.)",
+            category: "เดินทางกลับ",
+            desc: "เช็กอิน โหลดกระเป๋า ผ่านจุดตรวจค้น เพื่อเตรียมบินกลับอย่างสบายใจ",
+            icon: "fa-plane-departure",
+            color: "text-blue-600 bg-blue-50",
+            query: "Phuket International Airport Domestic Departure"
+          }
+        ]
+      }
+    };
+
+    function renderDay(day) {
+      const data = tripData[day];
+      document.getElementById('day-title').innerText = data.title;
+      document.getElementById('day-desc').innerText = data.hotel;
+      document.getElementById('route-map-btn').href = data.routeUrl;
+
+      const container = document.getElementById('timeline-container');
+      container.innerHTML = '';
+
+      data.stops.forEach((stop) => {
+        const navUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.query)}`;
+        const card = document.createElement('div');
+        card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center hover:shadow-md transition";
+        card.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${stop.color}">
+              <i class="fa-solid ${stop.icon}"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">${stop.time}</span>
+                <span class="text-xs text-teal-600 font-medium">${stop.category}</span>
+              </div>
+              <h3 class="font-bold text-base text-slate-800 mt-1">${stop.title}</h3>
+              <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">${stop.desc}</p>
+            </div>
+          </div>
+          <div class="w-full sm:w-auto shrink-0 pt-2 sm:pt-0">
+            <a href="${navUrl}" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center bg-slate-100 hover:bg-teal-50 hover:text-teal-700 text-slate-700 text-xs font-semibold px-3 py-2 rounded-xl border border-slate-200 transition">
+              <i class="fa-solid fa-location-arrow mr-1.5 text-teal-600"></i> นำทาง (Google Maps)
+            </a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function switchDay(day) {
+      document.querySelectorAll('.day-tab').forEach((tab, index) => {
+        if (index + 1 === day) {
+          tab.className = "day-tab px-4 py-2 rounded-xl text-sm font-semibold transition bg-teal-600 text-white shrink-0 shadow-sm";
+        } else {
+          tab.className = "day-tab px-4 py-2 rounded-xl text-sm font-semibold transition bg-slate-100 text-slate-600 hover:bg-slate-200 shrink-0";
+        }
+      });
+      renderDay(day);
+    }
+
+    // Initialize Day 1
+    renderDay(1);
+  </script>
+</body>
+</html>
